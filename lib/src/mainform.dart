@@ -19,7 +19,8 @@ class MainFormView extends HookWidget {
       child: Column(
         children: [
           FormHookUtil.makeFields(fields: fields, context: context),
-          ElevatedButton(
+          MaterialButton(
+            color: Theme.of(context).accentColor,
             onPressed: () async {
               final fstate = _fbkey.currentState;
               if (fstate!.saveAndValidate()) {
