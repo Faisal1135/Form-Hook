@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
-class HelperFunction {
+class FormHookUtil {
   static Widget textForm({
     required String name,
     required String label,
@@ -44,18 +44,20 @@ class HelperFunction {
     required String name,
     required BuildContext context,
   }) {
-    return HelperFunction.textForm(name: name, label: name, context: context);
+    return FormHookUtil.textForm(name: name, label: name, context: context);
   }
 
   static Widget makeFields(
       {required List fields, required BuildContext context}) {
     return Column(children: [
-      ...fields.map((e) {
-        if (e.runtimeType == String) {
-          return getFormFieldFromStr(name: e, context: context);
-        }
-        return e;
-      }),
+      ...fields.map(
+        (e) {
+          if (e.runtimeType == String) {
+            return getFormFieldFromStr(name: e, context: context);
+          }
+          return e;
+        },
+      ),
       SizedBox(
         height: 20,
       ),

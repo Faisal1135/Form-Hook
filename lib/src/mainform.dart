@@ -18,7 +18,7 @@ class MainFormView extends HookWidget {
       key: _fbkey,
       child: Column(
         children: [
-          HelperFunction.makeFields(fields: fields, context: context),
+          FormHookUtil.makeFields(fields: fields, context: context),
           ElevatedButton(
             onPressed: () async {
               final fstate = _fbkey.currentState;
