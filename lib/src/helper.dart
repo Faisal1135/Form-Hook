@@ -13,15 +13,36 @@ class FormHookUtil {
     Widget? suffix,
     bool isRequired = true,
     TextInputType? inputType,
+    FieldDecType fieldDecType = FieldDecType.Normal,
+    InputDecoration? inputDecoration,
     EdgeInsetsGeometry padding = const EdgeInsets.only(top: 20.0),
     List<String? Function(dynamic)>? validator,
   }) {
     InputDecoration decoration = InputDecoration(
-        border: OutlineInputBorder(),
         icon: Icon(icon),
-        hintText: hint,
+        hintText: hint ?? "Enter your $name",
         labelText: label,
         suffixIcon: suffix);
+
+    if (fieldDecType == FieldDecType.Rectangle) {
+      decoration.copyWith(border: OutlineInputBorder());
+    }
+    if (fieldDecType == FieldDecType.Rounded) {
+      decoration.copyWith(
+        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: 1.0),
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.blueAccent, width: 2.0),
+          borderRadius: BorderRadius.all(Radius.circular(32.0)),
+        ),
+      );
+    }
 
     return Container(
       padding: padding,
@@ -30,7 +51,7 @@ class FormHookUtil {
         autovalidateMode: AutovalidateMode.onUserInteraction,
         name: name,
         obscureText: obscure,
-        decoration: decoration,
+        decoration: inputDecoration ?? decoration,
         validator: FormBuilderValidators.compose([
           if (isRequired) FormBuilderValidators.required(context),
           if (validator != null) ...validator
@@ -63,4 +84,10 @@ class FormHookUtil {
       ),
     ]);
   }
+}
+
+enum FieldDecType {
+  Normal,
+  Rectangle,
+  Rounded,
 }

@@ -7,15 +7,20 @@ class MainFormView extends HookWidget {
   final GlobalKey<FormBuilderState> _fbkey = GlobalKey<FormBuilderState>();
   final List fields;
   final String btnTitle;
+  final Map<String, dynamic> begainVal;
   final Function(Map<String, dynamic>) onSubmit;
 
   MainFormView(
-      {required this.fields, this.btnTitle = "Submit", required this.onSubmit});
+      {required this.fields,
+      this.btnTitle = "Submit",
+      required this.onSubmit,
+      this.begainVal = const <String, dynamic>{}});
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: _fbkey,
+      initialValue: begainVal,
       child: Column(
         children: [
           FormHookUtil.makeFields(fields: fields, context: context),
