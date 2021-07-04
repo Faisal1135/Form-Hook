@@ -1,11 +1,11 @@
 name: form_hook
 description: form hook make flutter form with a string with adaptive complexity
 version: 0.0.1
+author: Faisal Kabir Galib <bear.galib.bg@gmail.com>
 homepage: https://github.com/Faisal1135/Form-Hook
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.17.0"
   flutter: ">=1.17.0"
 
 dependencies:
