@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'constant.dart';
 
 class FormHookUtil {
   static Widget textForm({
@@ -20,21 +21,21 @@ class FormHookUtil {
     List<String? Function(dynamic)>? validator,
   }) {
     InputDecoration decoration = InputDecoration(
-        hintText: hint ?? "Enter your $name",
-        labelText: label,
+        hintText: hint ?? "Enter your $name".capitalizeFirstofEach,
+        labelText: label.inCaps,
         suffixIcon: suffix);
 
     if (icon != null) {
-      decoration.copyWith(
+      decoration = decoration.copyWith(
         icon: Icon(icon),
       );
     }
 
     if (fieldDecType == FieldDecType.Rectangle) {
-      decoration.copyWith(border: OutlineInputBorder());
+      decoration = decoration.copyWith(border: OutlineInputBorder());
     }
     if (fieldDecType == FieldDecType.Rounded) {
-      decoration.copyWith(
+      decoration = decoration.copyWith(
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),
@@ -87,19 +88,19 @@ class FormHookUtil {
         InputDecoration(labelText: label, suffixIcon: suffix);
 
     if (icon != null) {
-      decoration.copyWith(
+      decoration = decoration.copyWith(
         icon: Icon(icon),
       );
     }
     if (fieldDecType == FieldDecType.Normal) {
-      decoration.copyWith(border: InputBorder.none);
+      decoration = decoration.copyWith(border: InputBorder.none);
     }
 
     if (fieldDecType == FieldDecType.Rectangle) {
-      decoration.copyWith(border: OutlineInputBorder());
+      decoration = decoration.copyWith(border: OutlineInputBorder());
     }
     if (fieldDecType == FieldDecType.Rounded) {
-      decoration.copyWith(
+      decoration = decoration.copyWith(
         contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.all(Radius.circular(32.0)),
