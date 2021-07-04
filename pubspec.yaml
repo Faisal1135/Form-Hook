@@ -1,12 +1,12 @@
 name: form_hook
-description: This will help use form
+description: form hook make flutter form with a string with adaptive complexity
 version: 0.0.1
-homepage: null
+homepage: https://github.com/Faisal1135/Form-Hook
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.17.0"
-
+  flutter: ">=1.17.0"
 
 dependencies:
   flutter:
@@ -22,7 +22,6 @@ dev_dependencies:
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
 flutter: null
-
 # To add assets to your package, add an assets section, like this:
 # assets:
 #   - images/a_dot_burr.jpeg
