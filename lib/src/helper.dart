@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
+
 import 'constant.dart';
 
 class FormHookUtil {
@@ -60,7 +62,7 @@ class FormHookUtil {
         obscureText: obscure,
         decoration: inputDecoration ?? decoration,
         validator: FormBuilderValidators.compose([
-          if (isRequired) FormBuilderValidators.required(context),
+          if (isRequired) FormBuilderValidators.required(),
           if (validator != null) ...validator
         ]),
         keyboardType: inputType ?? TextInputType.text,
@@ -146,7 +148,7 @@ class FormHookUtil {
         name: name,
         decoration: inputDecoration ?? decoration,
         validator: FormBuilderValidators.compose([
-          if (isRequired) FormBuilderValidators.required(context),
+          if (isRequired) FormBuilderValidators.required(),
           if (validator != null) ...validator
         ]),
       ),
@@ -182,10 +184,10 @@ class FormHookUtil {
     final resvalid = [];
     validator.forEach((element) {
       if (element == FormHookValidator.Email) {
-        resvalid.add(FormBuilderValidators.email(context));
+        resvalid.add(FormBuilderValidators.email());
       }
       if (element == FormHookValidator.Url) {
-        resvalid.add(FormBuilderValidators.url(context));
+        resvalid.add(FormBuilderValidators.url());
       }
     });
   }
