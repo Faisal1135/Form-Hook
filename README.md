@@ -5,7 +5,7 @@ form hook can render fields and of form very simple manner even with just a stri
 
 ## Example
 
-```
+``` dart
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,9 +39,7 @@ form hook can render fields and of form very simple manner even with just a stri
   }
 ```
 
-```
-code
-```
+
 
 * default string makes your field required and give you the data with map with same key that you provided.
 * with fieldDecType property you can modify decoration .if it failed to meet you need you can provide inputdecoration of your need.
