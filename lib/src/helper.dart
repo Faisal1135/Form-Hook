@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
 
 import 'constant.dart';
 
@@ -14,13 +13,15 @@ class FormHookUtil {
     bool obscure = false,
     IconData? icon,
     Widget? suffix,
+    dynamic initialValue,
     bool isRequired = true,
     TextInputType? inputType,
-    FieldDecType fieldDecType = FieldDecType.Normal,
+    dynamic Function(String?)? valueTransformer,
+    FieldDecType fieldDecType = FieldDecType.Rectangle,
     InputDecoration? inputDecoration,
     EdgeInsetsGeometry padding =
         const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-    List<String? Function(dynamic)>? validator,
+    String? Function(String?)? validator,
   }) {
     InputDecoration decoration = InputDecoration(
         hintText: hint ?? "Enter your $name".capitalizeFirstofEach,
@@ -59,28 +60,37 @@ class FormHookUtil {
         controller: controller,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         name: name,
+        valueTransformer: valueTransformer,
+        initialValue: initialValue,
         obscureText: obscure,
         decoration: inputDecoration ?? decoration,
-        validator: FormBuilderValidators.compose([
-          if (isRequired) FormBuilderValidators.required(),
-          if (validator != null) ...validator
-        ]),
+        validator: validator ??
+            (val) {
+              if (isRequired && (val == null || val.isEmpty)) {
+                return "This field is required";
+              }
+              return null;
+            },
         keyboardType: inputType ?? TextInputType.text,
       ),
     );
   }
 
-  static Widget fhDropDown({
+  static Widget fhDropDown<T>({
     required String name,
     required String label,
     required BuildContext context,
-    List? valueandlabel,
-    List? values,
-    List? labels,
+    List<T>? valueandlabel,
+    T? initialValue,
+    List<T>? values,
+    List<String>? labels,
+    List<DropdownMenuItem<T>>? items,
     IconData? icon,
     Widget? suffix,
+    void Function(T id)? onChange,
     bool isRequired = true,
-    FieldDecType fieldDecType = FieldDecType.Normal,
+    dynamic Function(T?)? valueTransformer,
+    FieldDecType fieldDecType = FieldDecType.Rectangle,
     InputDecoration? inputDecoration,
     EdgeInsetsGeometry padding =
         const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
@@ -117,7 +127,7 @@ class FormHookUtil {
         ),
       );
     }
-    var drpitems = <DropdownMenuItem<dynamic>>[];
+    var drpitems = <DropdownMenuItem<T>>[];
     if (valueandlabel != null) {
       drpitems = valueandlabel
           .map(
@@ -134,23 +144,32 @@ class FormHookUtil {
       drpitems = values
           .asMap()
           .keys
-          .map((index) => DropdownMenuItem(
-                value: values[index],
-                child: Text('${labels[index]}'),
-              ))
+          .map(
+            (index) => DropdownMenuItem(
+              value: values[index],
+              child: Text('${labels[index]}'),
+            ),
+          )
           .toList();
     }
 
     return Container(
       padding: padding,
-      child: FormBuilderDropdown(
-        items: drpitems,
+      child: FormBuilderDropdown<T>(
+        initialValue: initialValue,
+        items: items ?? drpitems,
         name: name,
+
+        valueTransformer: valueTransformer,
+        onChanged: (val) {
+          if (val == null || onChange == null) return;
+          onChange(val);
+        },
+        // onChanged: (dynamic val) {
+        //   if (val == null || onChange == null) return;
+        //   onChange(val.toString());
+        // },
         decoration: inputDecoration ?? decoration,
-        validator: FormBuilderValidators.compose([
-          if (isRequired) FormBuilderValidators.required(),
-          if (validator != null) ...validator
-        ]),
       ),
     );
   }
@@ -177,19 +196,6 @@ class FormHookUtil {
         height: 20,
       ),
     ]);
-  }
-
-  static getValidators(
-      List<FormHookValidator> validator, BuildContext context) {
-    final resvalid = [];
-    validator.forEach((element) {
-      if (element == FormHookValidator.Email) {
-        resvalid.add(FormBuilderValidators.email());
-      }
-      if (element == FormHookValidator.Url) {
-        resvalid.add(FormBuilderValidators.url());
-      }
-    });
   }
 }
 
